@@ -1,0 +1,1 @@
+`pandoc -N --latex-engine=xelatex ./relazione.tex -o ./relazione.pdf `
