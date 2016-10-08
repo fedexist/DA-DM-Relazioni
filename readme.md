@@ -1,1 +1,1 @@
-`pandoc -N --latex-engine=xelatex ./relazione.tex -o ./relazione.pdf `
+pandoc -N --from=markdown --to=latex --latex-engine=xelatex ./relazione.md -o ./relazione.pdf
