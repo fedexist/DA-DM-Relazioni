@@ -7,7 +7,8 @@ La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modell
 Infatti, si ha che: $P=\frac {\pi}{4}$, da cui possiamo ottenere $\pi= 4P$ e possiamo dedurre che, conoscendo il valore della probabilità $P$, possiamo ricavare il vero valore di $\pi$.
 Si è proceduto, quindi, a generare casualmente una quantità fissata $n$ di punti, memorizzati in un vettore apposito
 ```Matlab
-point = rand(2,n); % vettore 2xn, ogni colonna è un punto
+%% vettore 2 x n, ogni colonna è un punto
+point = rand(2,n); 
 ```
 dal quale procediamo, poi, a contare il numero di punti che hanno distanza dall'origine $\leq 1$
 ```Matlab
@@ -15,9 +16,11 @@ inside = sum(sum(point.*point) <= 1);
 ```
 per poi utilizzare tale valore per calcolare il valore di $\pi$ che volevamo trovare. 
 ```Matlab
-empirical_pi = inside/n;
+empirical_pi = 4 * inside/n;
 ```
 È importante evidenziare che tale risultato non è altro che una stima, a cui siamo costretti a ricorrere per la natura finita di un singolo esperimento (quantità fissata di campioni $n$) e della realtà stessa.
+
+\pagebreak
 
 ## Teorema di Čebyšëv: accuratezza e confidenza
 
@@ -28,12 +31,43 @@ $\Pr\left(|{\bar{x}-\mu}| \ge \epsilon\right)\le \;\delta$
 
 con
 
-$\delta = \frac{\sigma^2}{n\cdot\epsilon^2} \Leftrightarrow \epsilon = \sqrt{\frac{\sigma^2}{n\cdot\delta}}$
+$\delta = \frac{\sigma_x^2}{n\cdot\epsilon^2} \; \epsilon = \sqrt{\frac{\sigma_x^2}{n\cdot\delta}}  \; \sigma_x^2 = varianza\,di\,x$
 
-che può essere riscritta
+che può essere riscritta come
 
 $\Pr\left(|{\bar{x}-\mu}| \le \epsilon\right)\ge \;1-\delta$
 
+Quindi, per effettuare la nuova analisi abbiamo bisogno di $\sigma^2_x$, per poter ricavare $\epsilon$. Per fare questo, maggioriamo il suo valore sfruttando la definizione della varianza:
+
+$\sigma^2_x = E_x\{x^2\} - \mu^2 \le\mu-\mu^2=\mu ( 1 - \mu ) \le \frac{1}{4}$
+
+Tale maggiorazione è giustificata dal fatto che:
+
+- $x^2 \le x \in [0,1] \implies E_x\{x^2\} \le E_x\{x\} = \mu$
+- $\mu$ è una variabile aleatoria $\in [0,1]$, per cui $\sigma^2_x$ ha come valore medio $\frac{1}{2}$ 
+- $\mu ( 1 - \mu )$ è una funzione concava che ha come massimo $\mu = \frac{1}{2} \implies \sigma^2_x = \frac{1}{4}$
+
+Possiamo, quindi, fissato un $\delta$ obiettivo, trovare $\epsilon$ e usarlo per calcolare la vera accuratezza del risultato degli $m$ esperimenti:
+
+```Matlab
+delta = 0.05;
+m = 1000000;
+sigma2 = 1/4;
+epsilon = sqrt(sigma2/(n*delta));
+%% All'interno del ciclo, per ogni esperimento da 1 a m
+    if (abs(empirical_pi - pi) > 4 * epsilon)
+        true_delta = true_delta + 1;
+    end
+%% Fuori dal ciclo
+true_delta = true_delta / m;
+```
+
+Confrontando il $\delta_{true}$ con il $\delta$ obiettivo possiamo vedere che:
+
+-
+
+
+\pagebreak
 
 # Stima di una funzione: regressore, dataset ausiliari, analisi dell'errore al variare di complessità e di $\lambda$
 
