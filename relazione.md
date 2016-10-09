@@ -31,7 +31,7 @@ $\Pr\left(|{\bar{x}-\mu}| \ge \epsilon\right)\le \;\delta$
 
 con
 
-$\delta = \frac{\sigma_x^2}{n\cdot\epsilon^2} \; \epsilon = \sqrt{\frac{\sigma_x^2}{n\cdot\delta}}  \; \sigma_x^2 = varianza\,di\,x$
+$\delta = \frac{\sigma_x^2}{n\cdot\epsilon^2} \; \; \; \epsilon = \sqrt{\frac{\sigma_x^2}{n\cdot\delta}}  \; \; \; \sigma_x^2 = varianza\,di\,x$
 
 che può essere riscritta come
 
@@ -44,8 +44,8 @@ $\sigma^2_x = E_x\{x^2\} - \mu^2 \le\mu-\mu^2=\mu ( 1 - \mu ) \le \frac{1}{4}$
 Tale maggiorazione è giustificata dal fatto che:
 
 - $x^2 \le x \in [0,1] \implies E_x\{x^2\} \le E_x\{x\} = \mu$
-- $\mu$ è una variabile aleatoria $\in [0,1]$, per cui $\sigma^2_x$ ha come valore medio $\frac{1}{2}$ 
-- $\mu ( 1 - \mu )$ è una funzione concava che ha come massimo $\mu = \frac{1}{2} \implies \sigma^2_x = \frac{1}{4}$
+- $\mu$ è una variabile aleatoria $\in [0,1]$, per cui $\sigma^2_x$ ha come valore medio $\frac{1}{2}$ (ndr. non necessario, e forse neanche corretto)
+- $\sigma^2_x (\mu) =\mu ( 1 - \mu )$ è una funzione concava che ha come massimo $\mu = \frac{1}{2} \implies \sigma^2_x = \frac{1}{4}$
 
 Possiamo, quindi, fissato un $\delta$ obiettivo, trovare $\epsilon$ e usarlo per calcolare la vera accuratezza del risultato degli $m$ esperimenti:
 
@@ -55,12 +55,16 @@ m = 1000000;
 sigma2 = 1/4;
 epsilon = sqrt(sigma2/(n*delta));
 %% All'interno del ciclo, per ogni esperimento da 1 a m
-    if (abs(empirical_pi - pi) > 4 * epsilon)
+    if (abs(empirical_pi - pi) > 4*epsilon)
         true_delta = true_delta + 1;
     end
 %% Fuori dal ciclo
 true_delta = true_delta / m;
 ```
+Tuttavia, non importa quanto grande, $m$ si ottiene sempre che $\delta_{true} = 0$, perché [mettere motivo] e quindi, intuiamo che la Disuguaglianza di Čebyšëv non è sufficiente per determinare efficacemente se il numero di campioni a disposizione è sufficiente per avere la confidenza desiderata, proprio per questo si introduce la Disuguaglianza di Hoeffding:
+
+$\Pr\left(|{\bar{x}-\mu}| \ge t\right)\le \;2e^{-2nt^2} = \delta \implies \epsilon = t = \sqrt{\frac{log(\frac{2}{\delta})}{2n}}$
+
 
 Confrontando il $\delta_{true}$ con il $\delta$ obiettivo possiamo vedere che:
 
