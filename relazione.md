@@ -3,7 +3,7 @@
 # Il valore di $\pi$ : stima e confidenza
 
 ## Stima del valore di $\pi$
-La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modellando tale valore come la probabilità $P$ che, all'interno di un riferimento cartesiano con origine nel centro di un cerchio di raggio unitario inscritto in un quadrato, un punto di coordinate $(x, y), \forall x,y \in (0,1)$, si trovi o meno all'interno dell'area del cerchio.
+La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modellando tale valore come la probabilità $P$ che, all'interno di un riferimento cartesiano con origine nel centro di un cerchio di raggio unitario inscritto in un quadrato, un punto di coordinate $(x, y), x,y \in (0,1)$, si trovi o meno all'interno dell'area del cerchio.
 Infatti, si ha che: $P=\frac {\pi}{4}$, da cui possiamo ottenere $\pi= 4P$ e possiamo dedurre che, conoscendo il valore della probabilità $P$, possiamo ricavare il vero valore di $\pi$.
 Si è proceduto, quindi, a generare casualmente una quantità fissata $n$ di punti, memorizzati in un vettore apposito
 ```Matlab
