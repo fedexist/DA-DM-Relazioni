@@ -1,1 +1,1 @@
-`pandoc -V fontfamily="mathptmx" --latex-engine=xelatex ./relazione.md -o ./relazione.pdf `
+pandoc -V fontfamily="mathptmx" --latex-engine=xelatex ./relazione.md -o ./relazione.pdf
