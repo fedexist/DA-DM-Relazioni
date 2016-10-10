@@ -61,14 +61,12 @@ epsilon = sqrt(sigma2/(n*delta));
 %% Fuori dal ciclo
 true_delta = true_delta / m;
 ```
-Tuttavia, non importa quanto grande, $m$ si ottiene sempre che $\delta_{true} = 0$, perché [mettere motivo] e quindi, intuiamo che la Disuguaglianza di Čebyšëv non è sufficiente per determinare efficacemente se il numero di campioni a disposizione è sufficiente per avere la confidenza desiderata, proprio per questo si introduce la Disuguaglianza di Hoeffding:
+Tuttavia, si ottiene sempre che $\delta_{true} = 0$, questo perché le condizioni imposte da Čebyšëv sono troppo conservative e il vero $\delta$ è molto più piccolo di quello stimato. Intuiamo, quindi, che Čebyšëv non è sufficiente 
+per effettuare una stima abbastanza veritiera del $\delta$ e per questo si introduce la Disuguaglianza di Hoeffding:
 
 $\Pr\left(|{\bar{x}-\mu}| \ge t\right)\le \;2e^{-2nt^2} = \delta \implies \epsilon = t = \sqrt{\frac{log(\frac{2}{\delta})}{2n}}$
 
-
-Confrontando il $\delta_{true}$ con il $\delta$ obiettivo possiamo vedere che:
-
--
+Per cui, il delta stimato imponendo `epsilon = sqrt(log(2/delta)/(2*n))` è molto più vicino al $\delta$ vero.
 
 
 \pagebreak
