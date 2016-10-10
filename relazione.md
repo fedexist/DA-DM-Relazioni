@@ -1,10 +1,11 @@
 ﻿% Esercitazione 1
+% Edoardo Ferrante; Federico D'Ambrosio
 
 # Il valore di $\pi$ : stima e confidenza
 
 ## Stima del valore di $\pi$
 La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modellando tale valore come la probabilità $P$ che, all'interno di un riferimento cartesiano con origine nel centro di un cerchio di raggio unitario inscritto in un quadrato, un punto di coordinate $(x, y), x,y \in (0,1)$, si trovi o meno all'interno dell'area del cerchio.
-Infatti, si ha che: $P=\frac {\pi}{4}$, da cui possiamo ottenere $\pi= 4P$ e possiamo dedurre che, conoscendo il valore della probabilità $P$, possiamo ricavare il vero valore di $\pi$.
+Infatti, si ha che: $P=\frac {\pi}{4}$, da cui possiamo ottenere $\pi= 4P$ e dedurre che, conoscendo il valore della probabilità $P$, possiamo ricavare il vero valore di $\pi$.
 Si è proceduto, quindi, a generare casualmente una quantità fissata $n$ di punti, memorizzati in un vettore apposito
 ```Matlab
 %% vettore 2 x n, ogni colonna è un punto
@@ -18,7 +19,9 @@ per poi utilizzare tale valore per calcolare il valore di $\pi$ che volevamo tro
 ```Matlab
 empirical_pi = 4 * inside/n;
 ```
-È importante evidenziare che tale risultato non è altro che una stima, a cui siamo costretti a ricorrere per la natura finita di un singolo esperimento (quantità fissata di campioni $n$) e della realtà stessa.
+I risultati ci permettono di intuire che all'aumentare di $n$, cioè dei campioni a nostra disposizione, aumenta anche la precisione del valore stimato di $\pi$; e, in particolare, per aumentare la precisione di un fattore $N$, dobbiamo aumentare il numero di 
+campioni di un fattore $N^2$.
+È importante evidenziare che tali risultati, ottenuti per $n$ sempre maggiori, non sono altro che stime, a cui siamo costretti a ricorrere per la natura finita di un singolo esperimento (quantità fissata di campioni $n$).
 
 \pagebreak
 
@@ -37,7 +40,8 @@ che può essere riscritta come
 
 $\Pr\left(|{\bar{x}-\mu}| \le \epsilon\right)\ge \;1-\delta$
 
-Quindi, per effettuare la nuova analisi abbiamo bisogno di $\sigma^2_x$, per poter ricavare $\epsilon$. Per fare questo, maggioriamo il suo valore sfruttando la definizione della varianza:
+Questa disuguaglianza afferma che la probabilità $\delta$ (confidenza) che la realizzazione di una variabile aleatoria $x$ cada al di fuori di un intervallo simmetrico, attorno al suo valore medio $\mu$, di ampiezza $2\epsilon$, è inversamente proporzionale al numero di campioni a disposizione.
+Per effettuare, quindi, la nuova analisi abbiamo bisogno di $\sigma^2_x$, per poter ricavare $\epsilon$. Per fare questo, maggioriamo il suo valore sfruttando la definizione della varianza:
 
 $\sigma^2_x = E_x\{x^2\} - \mu^2 \le\mu-\mu^2=\mu ( 1 - \mu ) \le \frac{1}{4}$
 
@@ -61,7 +65,7 @@ epsilon = sqrt(sigma2/(n*delta));
 %% Fuori dal ciclo
 true_delta = true_delta / m;
 ```
-Tuttavia, si ottiene sempre che $\delta_{true} = 0$, questo perché le condizioni imposte da Čebyšëv sono troppo conservative e il vero $\delta$ è molto più piccolo di quello stimato. Intuiamo, quindi, che Čebyšëv non è sufficiente 
+Tuttavia, si ottiene sempre che $\delta_{true} = 0$, questo perché le condizioni imposte da Čebyšëv sono troppo conservative, poco sensibili alla variazione di $n$, e il vero $\delta$ è molto più piccolo di quello stimato. Intuiamo, quindi, che Čebyšëv non è sufficiente 
 per effettuare una stima abbastanza veritiera del $\delta$ e per questo si introduce la Disuguaglianza di Hoeffding:
 
 $\Pr\left(|{\bar{x}-\mu}| \ge t\right)\le \;2e^{-2nt^2} = \delta \implies \epsilon = t = \sqrt{\frac{log(\frac{2}{\delta})}{2n}}$
