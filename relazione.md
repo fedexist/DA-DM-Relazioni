@@ -1,4 +1,5 @@
-﻿% Esercitazione 1
+﻿a
+% Esercitazione 1
 % Edoardo Ferrante; Federico D'Ambrosio
 
 # Il valore di $\pi$ : stima e confidenza
@@ -183,7 +184,7 @@ I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
 
 ## Stimatore polarizzato dell'errore
 
-Avendo visto le relazioni fra complessita, errore e quantita di campioni possiamo pensare di introdurre la complessita all'interno della definizione del problema in modo da poter controllare piu facilmente il bilanciamento fra complessita e precisione.
+Avendo visto le relazioni fra complessità, errore e quantità di campioni possiamo pensare di introdurre la complessità all'interno della definizione del problema in modo da poter controllare più facilmente il bilanciamento fra complessità e precisione.
 
 Aggiorniamo quindi la definizione dell'errore da minimizzare:
 
@@ -193,14 +194,50 @@ e quindi dei coefficienti, rendendoli:
 
 $c_i = (X_i^TX_i + \lambda \mathbb{I} )^+ X_i^T y$
 
-Dove $\lambda$ rappresenta la nostra fiducia nella qualita dei dati; infatti assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessita mentre se le diamo un valore piu basso la minimizzazione si incentrera di piu sul fittare i dati a disposizione.
+Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati; infatti assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessità mentre se le diamo un valore più basso la minimizzazione si incentrerà di più sul fittare i dati a disposizione.
 
-Avendo gia considerato in precedenza gli effetti della modifica della cardinalita del data set, della $\sigma$ del rumore e della complessita del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; altresi varieremo la $\lambda$.
+Avendo già considerato in precedenza gli effetti della modifica della cardinalità del data set, della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; altresì varieremo la $\lambda$.
+
+Provando con una $\lambda$ molto bassa, uguale $0.01$ quindi fidandoci dei nostri dati troviamo un errore fra la funzione vera e quella stimata una funzione diversa ad ogni realizzazione dell'esperimento con valori di notevole entità.
+
+Provando con una $\lambda$ più alta, uguale a $5$, riducendo quindi la nostra fiducia, troviamo una serie di funzioni di errori più similari fra loro, più regolari e che non raggiungono valori troppo alti.
+
+Infine provando con una $\lambda$ molto alta, uguale a $100$, sostanzialmente non curandoci dei dati, troviamo una serie di funzioni omogenee che rispecchiano la differenza tra una funzione quadratica (quella vera) e una costante in $0$ (ovvero quella che il nostro regressore di quinto grado sta approssimando con i c trovati minimizzando lambda)
+
+Quindi in questo caso in cui il rumore non è trascurabile e il dataset è molto ristretto possiamo dedurre che non fidarsi dei dati possa essere favorevole.
+
+Per poter trarre conclusioni più accurate però abbiamo deciso di costruire un esperimento finale che unisse quanto visto nel resto delle esercetazioni sui regressori con queste statistiche:
+
+```Matlab
+sigma = 2;
+n_true = 1000;
+n_train = 100;
+n_test = 100;
+lambda = 100;
+p = 9;
+
+ x_train = rand(n_train,1);
+ y_train = x_train.^2 + sigma*randn(size(x_train));
+ 
+  x_test = rand(n_test,1);
+ y_test = x_test.^2 + sigma*randn(size(x_test));
+ 
+ x_true = linspace(0,1,n_true)';
+ y_true = x_true.^2;
 
 
+```
 
+Quindi proviamo per trenta valori di $\lambda$ spaziati logaritmicamente fra $10^{-4}$ e $10^3$ come vari l'errore mantenendo costanti gli altri valori del problema.
+Così potremo vedere per quale valore di $\lambda$ si trovi il valore minimo dell'errore.
+Inoltre costruiamo uno stimatore dell'errore per vedere se il minimo dello stimatore si trovi per la stessa $\lambda$ dell'errore vero e quindi da questo si possa trovare un valore utile.
 
+?? metto codice
 
+Quindi disegnando i nostri grafici otteniamo che per ogni realizzazione dell'esperimento, i valori dell'errore vero e dello stimatore, benché aventi valori diversi distanti fra loro un numero correlato positivamente con l'entità del rumore, hanno mostrato avere il minimo per valori di $\lambda$ molto simili.
+Pertanto si conclude che la minimizzazione rispetto a $\lambda$ dello stimatore dell'errore fornisce un buon valore per questa costante. 
+
+grafico qua?
 
 
 
