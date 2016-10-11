@@ -140,12 +140,12 @@ Al variare di $\sigma$:
 
 - con $\sigma$ "ragionevole" ($\sigma = 2$), il regressore quadratico è quello ottimale.
  
-Sicchè, abbiamo concluso che, all'aumentare dei dati e, analogamente, al diminuire del rumore la complessità dello stimatore aumenta fino a raggiungere il massimo nel grado della funzione vera.
+Sicché, abbiamo concluso che, all'aumentare dei dati e, analogamente, al diminuire del rumore la complessità dello stimatore aumenta fino a raggiungere il massimo nel grado della funzione vera.
 
 ## Dataset ausiliari ed estimatore di errore
 
 Avendo queste informazioni sul minimo dobbiamo però considerare che, in uno scenario reale non avremo una vera funzione su cui calcolare l'errore e trovare, quindi, la complessità ottima e per questo, siamo costretti a trovare una stima della funzione vera.
-Si procede, quindi, a considerare l'intero dataset di campioni a disposizione diviso in 2 sub-set: il training set, di cardinalità $n_{train}$, che usiamo per stimare i valori dei parametri della funzione, e il test set, di cardinalità $n_{test} che usiamo per calcolare i regressori
+Si procede, quindi, a considerare l'intero dataset di campioni a disposizione diviso in 2 sub-set: il training set, di cardinalità $n_{train}$, che usiamo per stimare i valori dei parametri della funzione, e il test set, di cardinalità $n_{test}$ che usiamo per calcolare i regressori
 che useremo poi per calcolare l'errore.
 A questo punto, possiamo effettuare l'analisi, considerando ancora la funzione vera a disposizione, e possiamo fare un confronto degli errori calcolati, al variare della complessità $p$, usando le 3 funzioni che abbiamo: $y_{true}$, $y_{train}$ e $y_{test}$.
 
@@ -180,3 +180,21 @@ I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
  
   - con una piccola quantità di campioni conviene scegliere la funzione di regressione con complessità minore;
   - all'aumentare del numero di campioni è possibile scegliere una funzione di regressione con complessità sempre maggiore, fino ad arrivare a quella della funzione vera (in realtà, sconosciuta), senza superarla per non incorrere nell'overfitting.
+
+## Stimatore polarizzato dell'errore
+Avendo visto le relazioni fra complessità, errore e quantità di campioni possiamo pensare di introdurre la complessità all'interno della definizione del problema in modo da poter controllare più facilmente il bilanciamento fra complessità e precisione.
+Aggiorniamo quindi la definizione dell'errore da minimizzare:
+$||\underline{y}-X \underline{c}||^2 + \lambda ||\underline{c}||^2$
+e quindi dei coefficienti, rendendoli:
+$c_i = (X_i^TX_i + \lambda \mathbb{I} )^+ X_i^T y$
+Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati; infatti assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessità mentre se vi diamo un valore più basso la minimizzazione si incentrerà di più sul fittare i dati a disposizione.
+
+Avendo già considerato in precedenza gli effetti della modifica della cardinalità del data set della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; altresì varieremo la $\lambda$.
+
+
+
+
+
+
+
+
