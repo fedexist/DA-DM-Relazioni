@@ -4,9 +4,9 @@
 # Il valore di $\pi$ : stima e confidenza
 
 ## Stima del valore di $\pi$
-La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modellando tale valore come la probabilita $P$ che, all'interno di un riferimento cartesiano con origine nel centro di un cerchio di raggio unitario inscritto in un quadrato, un punto di coordinate $(x, y), x,y \in (0,1)$, si trovi o meno all'interno dell'area del cerchio.
+La prima parte dell'esercitazione verte sulla ricerca del valore di $\pi$ modellando tale valore come la probabilità $P$ che, all'interno di un riferimento cartesiano con origine nel centro di un cerchio di raggio unitario inscritto in un quadrato, un punto di coordinate $(x, y), x,y \in (0,1)$, si trovi o meno all'interno dell'area del cerchio.
 Infatti, si ha che: $P=\frac {\pi}{4}$, da cui possiamo ottenere $\pi= 4P$ e dedurre che, conoscendo il valore della probabilita $P$, possiamo ricavare il vero valore di $\pi$.
-Si e proceduto, quindi, a generare casualmente una quantita fissata $n$ di punti, memorizzati in un vettore apposito
+Si è proceduto, quindi, a generare casualmente una quantita fissata $n$ di punti, memorizzati in un vettore apposito
 ```Matlab
 %% vettore 2 x n, ogni colonna e un punto
 point = rand(2,n); 
@@ -19,9 +19,9 @@ per poi utilizzare tale valore per calcolare il valore di $\pi$ che volevamo tro
 ```Matlab
 empirical_pi = 4 * inside/n;
 ```
-I risultati ci permettono di intuire che all'aumentare di $n$, cioe dei campioni a nostra disposizione, aumenta anche la precisione del valore stimato di $\pi$; e, in particolare, per aumentare la precisione di un fattore $N$, dobbiamo aumentare il numero di 
+I risultati ci permettono di intuire che all'aumentare di $n$, cioè dei campioni a nostra disposizione, aumenta anche la precisione del valore stimato di $\pi$; e, in particolare, per aumentare la precisione di un fattore $N$, dobbiamo aumentare il numero di 
 campioni di un fattore $N^2$.
-E importante evidenziare che tali risultati, ottenuti per $n$ sempre maggiori, non sono altro che stime, a cui siamo costretti a ricorrere per la natura finita di un singolo esperimento (quantita fissata di campioni $n$).
+È importante evidenziare che tali risultati, ottenuti per $n$ sempre maggiori, non sono altro che stime, a cui siamo costretti a ricorrere per la natura finita di un singolo esperimento (quantita fissata di campioni $n$).
 
 \pagebreak
 
@@ -36,16 +36,16 @@ con
 
 $\delta = \frac{\sigma_x^2}{n\cdot\epsilon^2} \; \; \; \epsilon = \sqrt{\frac{\sigma_x^2}{n\cdot\delta}}  \; \; \; \sigma_x^2 = varianza\,di\,x$
 
-che puo essere riscritta come
+che può essere riscritta come
 
 $\Pr\left(|{\bar{x}-\mu}| \le \epsilon\right)\ge \;1-\delta$
 
-Questa disuguaglianza afferma che la probabilita $\delta$ (confidenza) che la realizzazione di una variabile aleatoria $x$ cada al di fuori di un intervallo simmetrico, attorno al suo valore medio $\mu$, di ampiezza $2\epsilon$, e inversamente proporzionale al numero di campioni a disposizione.
+Questa disuguaglianza afferma che la probabilità $\delta$ (confidenza) che la realizzazione di una variabile aleatoria $x$ cada al di fuori di un intervallo simmetrico, attorno al suo valore medio $\mu$, di ampiezza $2\epsilon$, è inversamente proporzionale al numero di campioni a disposizione.
 Per effettuare, quindi, la nuova analisi abbiamo bisogno di $\sigma^2_x$, per poter ricavare $\epsilon$. Per fare questo, maggioriamo il suo valore sfruttando la definizione della varianza:
 
 $\sigma^2_x = E_x\{x^2\} - \mu^2 \le\mu-\mu^2=\mu ( 1 - \mu ) \le \frac{1}{4}$
 
-Tale maggiorazione e giustificata dal fatto che:
+Tale maggiorazione è giustificata dal fatto che:
 
 - $x^2 \le x \in [0,1] \implies E_x\{x^2\} \le E_x\{x\} = \mu$
 - $\mu$ e una variabile aleatoria $\in [0,1]$, per cui $\sigma^2_x$ ha come valore medio $\frac{1}{2}$ 
@@ -65,20 +65,20 @@ epsilon = sqrt(sigma2/(n*delta));
 %% Fuori dal ciclo
 true_delta = true_delta / m;
 ```
-Tuttavia, si ottiene sempre che $\delta_{true} = 0$, questo perche le condizioni imposte da Cebysev sono troppo conservative, poco sensibili alla variazione di $n$, e il vero $\delta$ e molto piu piccolo di quello stimato. Intuiamo, quindi, che Cebysev non e sufficiente 
+Tuttavia, si ottiene sempre che $\delta_{true} = 0$, questo perchè le condizioni imposte da Cebysev sono troppo conservative, poco sensibili alla variazione di $n$, e il vero $\delta$ è molto più piccolo di quello stimato. Intuiamo, quindi, che Cebysev non è sufficiente 
 per effettuare una stima abbastanza veritiera del $\delta$ e per questo si introduce la Disuguaglianza di Hoeffding:
 
 $\Pr\left(|{\bar{x}-\mu}| \ge t\right)\le \;2e^{-2nt^2} = \delta \implies \epsilon = t = \sqrt{\frac{log(\frac{2}{\delta})}{2n}}$
 
-Per cui, il delta stimato imponendo `epsilon = sqrt(log(2/delta)/(2*n))` e molto piu vicino al $\delta$ vero.
+Per cui, il delta stimato imponendo `epsilon = sqrt(log(2/delta)/(2*n))` è molto piu vicino al $\delta$ vero.
 
 
 \pagebreak
 
-# Stima di una funzione: regressore, dataset ausiliari, analisi dell'errore al variare di complessita e di $\lambda$
+# Stima di una funzione: regressore, dataset ausiliari, analisi dell'errore al variare di complessità e di $\lambda$
 
 ## Stimatore di funzione
-La seconda sezione dell'esercitazione e incentrata, invece, sull'identificazione e ottimizzazione di estimatori di funzione e all'analisi del trade-off tra complessita ed errore in funzione del rumore e della quantita di dati a nostra disposizione.
+La seconda sezione dell'esercitazione è incentrata, invece, sull'identificazione e ottimizzazione di estimatori di funzione e all'analisi del trade-off tra complessità ed errore in funzione del rumore e della quantità di dati a nostra disposizione.
 Abbiamo quindi iniziato l'esercitazione generando la *vera funzione*.
 ```Matlab
 x_true = linspace(0,1,1000)';
@@ -88,13 +88,13 @@ Successivamente abbiamo definito x come un vettore contenente una campionatura r
 ```Matlab
 x = rand(n,1)
 ```
-dove n e la cardinalita del data set, generiamo quindi il data set simulando la funzione vera $y = x^2$ aggiungendovi un rumore gaussiano con media 0 e varianza $\sigma$.
+dove n e la cardinalità del data set, generiamo quindi il data set simulando la funzione vera $y = x^2$ aggiungendovi un rumore gaussiano con media 0 e varianza $\sigma$.
 ```Matlab
 y = x.^2 + sigma*randn(size(x));
 ```
 
-Presupponendo quindi di costruire un estimatore polinomiale $\hat{y_p}= \sum_{i=0}^{p} c_i x^i$ dove $p$ e la complessita scelta dello stesso.
-Conoscendo, dunque, il vero sistema, abbiamo deciso di provare $p$ fra $0$ e $3$ per vedere la relazione tra l'errore dell'estimatore e il numero di campioni a disposizione per ognuna di tali complessita.
+Presupponendo quindi di costruire un estimatore polinomiale $\hat{y_p}= \sum_{i=0}^{p} c_i x^i$ dove $p$ e la complessità scelta dello stesso.
+Conoscendo, dunque, il vero sistema, abbiamo deciso di provare $p$ fra $0$ e $3$ per vedere la relazione tra l'errore dell'estimatore e il numero di campioni a disposizione per ognuna di tali complessità.
 
 Necessitiamo quindi di $c_0, c_1, c_2$ e $c_3$, che  calcoliamo tramite
  $c_i = (X_i^TX_i)^+ X_i^T y$
@@ -127,27 +127,27 @@ e1 = sqrt(mean((yy-yy1).^2));
 e2 = sqrt(mean((yy-yy2).^2));
 e3 = sqrt(mean((yy-yy3).^2));
 ```
-Possiamo cosi analizzare come, al variare della dimensione del dataset e della quantita del rumore, cambi la complessita ottima del nostro stimatore.
+Possiamo così analizzare come, al variare della dimensione del dataset e della quantita del rumore, cambi la complessità ottima del nostro stimatore.
 
 Al variare di $\sigma$:
 
-- con $\sigma$ molto alto ($\sigma = 10$), rispetto al numero di campioni nel dataset abbiamo che l'errore minimo e dato dal modello costante (polinomio di grado 0).
+- con $\sigma$ molto alto ($\sigma = 10$), rispetto al numero di campioni nel dataset abbiamo che l'errore minimo è dato dal modello costante (polinomio di grado 0).
  Aumentando il numero di campioni:
  
-    - con $n = 5000$, il regressore lineare e quello ottimale;
+    - con $n = 5000$, il regressore lineare è quello ottimale;
     - con $n = 10000$, diviene ottimo il modello quadratico;
-    - per nessun $n$ finito puo venire che il modello di terzo grado sia migliore di quello di secondo.
+    - per nessun $n$ finito può venire che il modello di terzo grado sia migliore di quello di secondo.
 
-- con $\sigma$ "ragionevole" ($\sigma = 2$), il regressore quadratico e quello ottimale.
+- con $\sigma$ "ragionevole" ($\sigma = 2$), il regressore quadratico è quello ottimale.
  
-Sicche, abbiamo concluso che, all'aumentare dei dati e, analogamente, al diminuire del rumore la complessita dello stimatore aumenta fino a raggiungere il massimo nel grado della funzione vera.
+Sicché, abbiamo concluso che, all'aumentare dei dati e, analogamente, al diminuire del rumore la complessità dello stimatore aumenta fino a raggiungere il massimo nel grado della funzione vera.
 
 ## Dataset ausiliari ed estimatore di errore
 
-Avendo queste informazioni sul minimo dobbiamo pero considerare che, in uno scenario reale non avremo una vera funzione su cui calcolare l'errore e trovare, quindi, la complessita ottima e per questo, siamo costretti a trovare una stima della funzione vera.
-Si procede, quindi, a considerare l'intero dataset di campioni a disposizione diviso in 2 sub-set: il training set, di cardinalita $n_{train}$, che usiamo per stimare i valori dei parametri della funzione, e il test set, di cardinalita $n_{test}$ che usiamo per calcolare i regressori
+Avendo queste informazioni sul minimo dobbiamo però considerare che, in uno scenario reale non avremo una vera funzione su cui calcolare l'errore e trovare, quindi, la complessità ottima e per questo, siamo costretti a trovare una stima della funzione vera.
+Si procede, quindi, a considerare l'intero dataset di campioni a disposizione diviso in 2 sub-set: il training set, di cardinalità $n_{train}$, che usiamo per stimare i valori dei parametri della funzione, e il test set, di cardinalità $n_{test}$ che usiamo per calcolare i regressori
 che useremo poi per calcolare l'errore.
-A questo punto, possiamo effettuare l'analisi, considerando ancora la funzione vera a disposizione, e possiamo fare un confronto degli errori calcolati, al variare della complessita $p$, usando le 3 funzioni che abbiamo: $y_{true}$, $y_{train}$ e $y_{test}$.
+A questo punto, possiamo effettuare l'analisi, considerando ancora la funzione vera a disposizione, e possiamo fare un confronto degli errori calcolati, al variare della complessità $p$, usando le 3 funzioni che abbiamo: $y_{true}$, $y_{train}$ e $y_{test}$.
 
 ```Matlab
 % j-esimo ciclo da 0 a p
@@ -169,7 +169,7 @@ err(3, j+1) = err(3, j+1) + sqrt(mean((y_test - C*c).^2));
 
 I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
 
- - l'errore calcolato tramite il training set diminuisce all'aumentare del grado del polinomio considerato: questo errore e *biased* perche lo stiamo calcolando usando dati gia usati per la stima dei parametri dell'estimatore;
+ - l'errore calcolato tramite il training set diminuisce all'aumentare del grado del polinomio considerato: questo errore è *biased* perché lo stiamo calcolando usando dati già usati per la stima dei parametri dell'estimatore;
  - l'errore calcolato tramite il test set segue l'andamento dell'errore calcolato tramite la funzione vera, fornendoci una buona approssimazione a meno di una costante $\sigma$;
  - in presenza di rumore molto grande il modello migliore risulta essere quello di grado 0, la costante.
  
@@ -178,8 +178,8 @@ I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
  
  Dai risultati intuiamo che:
  
-  - con una piccola quantita di campioni conviene scegliere la funzione di regressione con complessita minore;
-  - all'aumentare del numero di campioni e possibile scegliere una funzione di regressione con complessita sempre maggiore, fino ad arrivare a quella della funzione vera (in realta, sconosciuta), senza superarla per non incorrere nell'overfitting.
+  - con una piccola quantità di campioni conviene scegliere la funzione di regressione con complessità minore;
+  - all'aumentare del numero di campioni è possibile scegliere una funzione di regressione con complessità sempre maggiore, fino ad arrivare, al massimo, a quella della funzione vera (in realtà, sconosciuta).
 
 ## Stimatore polarizzato dell'errore
 
