@@ -142,7 +142,7 @@ Al variare di $\sigma$:
  
 Sicché, abbiamo concluso che, all'aumentare dei dati e, analogamente, al diminuire del rumore la complessità dello stimatore aumenta fino a raggiungere il massimo nel grado della funzione vera.
 
-## insieme dei dati ausiliari e stimatore dell'errore
+## Insieme dei dati ausiliari e stimatore dell'errore
 
 Avendo queste informazioni sul minimo dobbiamo però considerare che, in uno scenario reale non avremo una vera funzione su cui calcolare l'errore e trovare, quindi, la complessità ottima e per questo, siamo costretti a trovare una stima della funzione vera.
 Si procede, quindi, a considerare l'intero insieme dei dati di campioni a disposizione diviso in 2 sottoinsiemi: l'insieme di addestramento, di cardinalità $n_{train}$, che usiamo per stimare i valori dei parametri della funzione, e l'insieme di testing, di cardinalità $n_{test}$ che usiamo per calcolare i regressori
@@ -197,7 +197,7 @@ Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati; infatti as
 
 Avendo già considerato in precedenza gli effetti della modifica della cardinalità dell'insieme dei dati, della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; altresì varieremo la $\lambda$.
 
-Provando con una $\lambda$ molto bassa, uguale $0.01$, fidandoci quindi dei nostri dati troviamo un errore fra la funzione vera e quella stimata che è una funzione diversa ad ogni realizzazione dell'esperimento, la quale presenta valori di notevole grandezza.
+Provando con una $\lambda$ molto bassa, uguale a $0.01$, fidandoci quindi dei nostri dati troviamo un errore fra la funzione vera e quella stimata che è una funzione diversa ad ogni realizzazione dell'esperimento, la quale presenta valori di notevole grandezza.
 
 Provando con una $\lambda$ più alta, uguale a $5$, riducendo quindi la nostra fiducia, troviamo una serie di funzioni di errori più similari fra loro, più regolari e che non raggiungono valori troppo alti.
 
@@ -237,7 +237,7 @@ Pertanto si conclude che la minimizzazione rispetto a $\lambda$ dello stimatore 
 ![Linea rossa: errore stimato, linea blu: errore vero](graph.png "In blu cose, in rosse altre")
 
 
-La distanza fra i minimi delle due funzioni può essere ascritto al fatto che utilizziamo variabili aleatorie e quindi abbiamo un intervallo attorno all'errore vero e una certa confidenza.
+La distanza fra i minimi delle due funzioni può essere ascritta al fatto che utilizziamo variabili aleatorie e quindi abbiamo un intervallo attorno all'errore vero e una certa confidenza.
 
 
 
