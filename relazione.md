@@ -30,15 +30,11 @@ campioni di un fattore $N^2$.
 Per quanto detto sopra, possiamo ripetere l'esperimento un numero $m$ di volte, generando per ogni $m$-esimo ciclo un nuovo insieme di punti da utilizzare per stimare $\pi$.
 In questa nuova situazione, possiamo analizzare la relazione che sussiste tra l'accuratezza e la confidenza, relazione evidenziata nella disuguaglianza di Čebyšëv:
 
-$\Pr\left(|{\bar{x}-\mu}| \ge \epsilon\right)\le \;\delta$
+$\Pr\left(|{\bar{x}-\mu}| \ge \epsilon\right)\le \;\delta \iff \Pr\left(|{\bar{x}-\mu}| \le \epsilon\right)\ge \;1-\delta$
 
 con
 
 $\delta = \frac{\sigma_x^2}{n\cdot\epsilon^2} \; \; \; \epsilon = \sqrt{\frac{\sigma_x^2}{n\cdot\delta}}  \; \; \; \sigma_x^2 = varianza\,di\,x$
-
-che può essere riscritta come
-
-$\Pr\left(|{\bar{x}-\mu}| \le \epsilon\right)\ge \;1-\delta$
 
 Questa disuguaglianza afferma che la probabilità $\delta$ (confidenza) che la realizzazione di una variabile aleatoria $x$ cada al di fuori di un intervallo simmetrico, attorno al suo valore medio $\mu$, di ampiezza $2\epsilon$, è inversamente proporzionale al numero di campioni a disposizione.
 Per effettuare, quindi, la nuova analisi abbiamo bisogno di $\sigma^2_x$, per poter ricavare $\epsilon$. Per fare questo, maggioriamo il suo valore sfruttando la definizione della varianza:
@@ -93,8 +89,7 @@ dove n è la cardinalità dell'insieme dei dati, generiamo quindi l'insieme dei 
 y = x.^2 + sigma*randn(size(x));
 ```
 
-Presupponendo quindi di costruire uno stimatore polinomiale $\hat{y_p}= \sum_{i=0}^{p} c_i x^i$ dove $p$ è la complessità scelta dello stesso.
-Conoscendo, dunque, il vero sistema, abbiamo deciso di provare $p$ fra $0$ e $3$ per vedere la relazione tra l'errore dello stimatore e il numero di campioni a disposizione per ognuna di tali complessità.
+Presupponendo quindi di costruire uno stimatore polinomiale $\hat{y_p}= \sum_{i=0}^{p} c_i x^i$ dove $p$ è la complessità scelta dello stesso e conoscendo, dunque, il vero sistema, abbiamo deciso di provare $p$ fra $0$ e $3$ per esaminare la relazione tra l'errore dello stimatore e il numero di campioni a disposizione per ognuna di tali complessità.
 
 Necessitiamo quindi di $c_0, c_1, c_2$ e $c_3$, che calcoliamo tramite
  $c_i = (X_i^TX_i)^+ X_i^T y$
@@ -169,7 +164,7 @@ err(3, j+1) = err(3, j+1) + sqrt(mean((y_test - C*c).^2));
 
 I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
 
- - l'errore calcolato tramite l'insieme di addestramento diminuisce all'aumentare del grado del polinomio considerato: questo errore è *polarizzato* perché lo stiamo calcolando usando dati già usati per la stima dei parametri dello stimatore;
+ - l'errore calcolato tramite l'insieme di addestramento diminuisce all'aumentare del grado del polinomio considerato: questo errore è *polarizzato* perché lo stiamo calcolando con i dati già usati per la stima dei parametri dello stimatore;
  - l'errore calcolato tramite l'insieme di testing segue l'andamento dell'errore calcolato tramite la funzione vera, fornendoci una buona approssimazione a meno di una costante $\sigma$;
  - in presenza di rumore molto grande il modello migliore risulta essere quello di grado 0, la costante.
  
@@ -183,9 +178,9 @@ I risultati ottenuto dal codice di cui sopra ci permettono di dire che:
 
 ## Stimatore polarizzato dell'errore
 
-Avendo visto le relazioni fra complessità, errore e quantità di campioni possiamo pensare di introdurre la stessa complessità all'interno della definizione del problema, tramite la norma del vettore delle costanti, in modo da poter controllare più facilmente il bilanciamento fra complessità e precisione.
+Avendo visto le relazioni fra complessità, errore e quantità di campioni possiamo pensare di introdurre la stessa complessità all'interno della definizione del problema, tramite la norma del vettore dei parametri $\underline{c}$, in modo da poter controllare più facilmente il bilanciamento fra complessità e precisione.
 
-Aggiorniamo quindi la definizione dell'errore da minimizzare:
+Aggiorniamo, quindi, la definizione dell'errore da minimizzare:
 
 $||\underline{y}-X \underline{c}||^2 + \lambda ||\underline{c}||^2$
 
@@ -193,17 +188,17 @@ e quindi dei coefficienti, rendendoli:
 
 $c_i = (X_i^TX_i + \lambda \mathbb{I} )^+ X_i^T y$
 
-Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati; infatti assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessità, mentre se le diamo un valore più basso la minimizzazione si incentrerà di più sull'adattarsi ai dati a disposizione.
+Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati. Infatti, assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessità, mentre se le diamo un valore più basso la minimizzazione si incentrerà di più sull'adattarsi ai dati a disposizione.
 
 Avendo già considerato in precedenza gli effetti della modifica della cardinalità dell'insieme dei dati, della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; per converso varieremo la $\lambda$.
 
-Provando con una $\lambda$ molto bassa, uguale a $0.01$, fidandoci quindi dei nostri dati troviamo un errore fra la funzione vera e quella stimata che è una funzione diversa ad ogni realizzazione dell'esperimento, la quale presenta valori di notevole grandezza.
+Provando con una $\lambda$ molto bassa, uguale a $0.01$, fidandoci quindi dei nostri dati, troviamo un errore fra la funzione vera e quella stimata che è una funzione diversa ad ogni realizzazione dell'esperimento, la quale presenta valori di notevole grandezza.
 
 Provando con una $\lambda$ più alta, uguale a $5$, riducendo quindi la nostra fiducia, troviamo una serie di funzioni di errori più similari fra loro, più regolari e che non raggiungono valori troppo alti.
 
-Infine provando con una $\lambda$ molto alta, uguale a $100$, sostanzialmente non curandoci dei dati, troviamo una serie di funzioni omogenee che rispecchiano la differenza tra una funzione quadratica (quella vera) e una costante in $0$ (ovvero quella che il nostro regressore di quinto grado sta approssimando con i c trovati minimizzando $\lambda$)
+Infine provando con una $\lambda$ molto alta, uguale a $100$, sostanzialmente non curandoci dei dati, troviamo una serie di funzioni omogenee che rispecchiano la differenza tra una funzione quadratica (quella vera) e una costante in $0$ (ovvero quella che il nostro regressore di quinto grado sta approssimando con i $c$ trovati minimizzando $\lambda$).
 
-Quindi in questo caso, nel quale il rumore non è di entità trascurabile e l'insieme dei dati è molto ristretto possiamo dedurre che non fidarsi dei dati possa essere favorevole.
+Quindi, in questo caso, in cui il rumore non è di entità trascurabile e l'insieme dei dati è molto ristretto, possiamo dedurre che non fidarsi dei dati possa essere favorevole.
 
 Per poter trarre conclusioni più accurate però, abbiamo deciso di costruire un esperimento finale che unisse quanto visto nel resto delle esercetazioni sui regressori con queste statistiche:
 
@@ -227,12 +222,12 @@ p = 9;
 
 ```
 
-Quindi proviamo per trenta valori di $\lambda$ spaziati logaritmicamente fra $10^{-4}$ e $10^3$ come vari l'errore mantenendo costanti gli altri valori del problema.
-Così potremo vedere per quale valore di $\lambda$ si trovi il valore minimo dell'errore.
+Quindi, proviamo per trenta valori di $\lambda$ spaziati logaritmicamente fra $10^{-4}$ e $10^3$ per vedere come vari l'errore, mantenendo costanti gli altri valori del problema.
+Così, potremo vedere per quale valore di $\lambda$ si trovi il valore minimo dell'errore.
 Inoltre costruiamo uno stimatore dell'errore per vedere se il minimo dello stimatore si trovi per la stessa $\lambda$ dell'errore vero e quindi da questo si possa trovare un valore utile.
 
-Quindi disegnando i nostri grafici otteniamo che per ogni realizzazione dell'esperimento, i valori dell'errore vero e dello stimatore, benché aventi valori diversi distanti fra loro un numero correlato positivamente con l'entita del rumore, hanno mostrato avere il minimo per valori di $\lambda$ molto simili.
-Pertanto si conclude che la minimizzazione rispetto a $\lambda$ dello stimatore dell'errore fornisce un buon valore per questa costante. 
+Quindi disegnando i nostri grafici otteniamo che per ogni realizzazione dell'esperimento, i valori dell'errore vero e dello stimatore, benché aventi valori diversi distanti fra loro un numero correlato positivamente con l'entità del rumore, hanno mostrato avere il minimo per valori di $\lambda$ molto simili.
+Pertanto, si conclude che la minimizzazione rispetto a $\lambda$ dello stimatore dell'errore fornisce un buon valore per questa costante. 
 
 ![Linea rossa: errore stimato, linea blu: errore vero](graph.png "In blu cose, in rosse altre")
 
