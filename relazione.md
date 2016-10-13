@@ -195,7 +195,7 @@ $c_i = (X_i^TX_i + \lambda \mathbb{I} )^+ X_i^T y$
 
 Dove $\lambda$ rappresenta la nostra fiducia nella qualità dei dati; infatti assegnando ad essa un valore alto, nella minimizzazione daremo un peso maggiore alla complessità, mentre se le diamo un valore più basso la minimizzazione si incentrerà di più sull'adattarsi ai dati a disposizione.
 
-Avendo già considerato in precedenza gli effetti della modifica della cardinalità dell'insieme dei dati, della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; altresì varieremo la $\lambda$.
+Avendo già considerato in precedenza gli effetti della modifica della cardinalità dell'insieme dei dati, della $\sigma$ del rumore e della complessità del modello, li manterremo costanti: precisamente $n_{train} = 10$, $\sigma = 2$ e $p = 5$; per converso varieremo la $\lambda$.
 
 Provando con una $\lambda$ molto bassa, uguale a $0.01$, fidandoci quindi dei nostri dati troviamo un errore fra la funzione vera e quella stimata che è una funzione diversa ad ogni realizzazione dell'esperimento, la quale presenta valori di notevole grandezza.
 
