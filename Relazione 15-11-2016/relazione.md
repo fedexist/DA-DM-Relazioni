@@ -8,7 +8,7 @@ Si è cominciata l'esercitazione calcolando l'iperpiano, che nel caso bidimensio
 
 $\min_{w} ||X \underline{w} - \underline{y}||^2 + \lambda || \underline{w} ||^2 \implies \underline{w}^* = ( X^T X + \lambda I )^+ X^T \underline{y}$
 
-Tale formulazione, che porta alla risoluzione di un problema di complessità quadratica rispetto al numero delle features, può essere trasformata in un problema, equivalente, con la complessità dipendente dal numero di campioni a disposizione.
+Tale formulazione, che porta alla risoluzione di un problema di complessità quadratica rispetto alla dimensionalità, può essere trasformata in un problema, equivalente, con la complessità dipendente dal numero di campioni a disposizione.
 Infatti, considerando $\underline{w} = X^T \underline{\alpha} \iff \underline{w} \in \mathbb{R}^d$, con 
 
  - $\underline{\alpha}$, un vettore di pesi;
@@ -56,7 +56,17 @@ Invece, $\gamma$ alto rende il modello più nonlineare.
 
 Utilizzando il kernel gaussiano, visto nel caso sinusoidale, è possibile implementare un classificatore binario come quello nel paragrafo precedente.
 
-Formato il nostro dataset, formato da 2 spirali sfasate, una avente punti con etichetta positiva, l'altra con etichetta negativa utilizziamo il kernel gaussiano per classificare i punti del dataset.
+Formato il nostro insieme dei dati, formato da 2 spirali sfasate, una avente punti con etichetta positiva, l'altra con etichetta negativa utilizziamo il kernel gaussiano per classificare i punti del insieme dei dati.
 
 Possiamo evidenziare che, per $\lambda$ decrescente in ```logspace(3,-4,30)``` (con $\gamma$ fisso a $.0001$), e $\gamma$ crescente in ```logspace(-4,3,30)``` (con $\lambda$ fisso a $1$), l'iperpiano ha comportamenti simili, cioè, aumenta la sua nonlinearità adattandosi sempre più ai dati a disposizione.
+
+Utilizzando un doppio ciclo possiamo provare tutti i valori per la coppia $(\gamma,\lambda)$, e trovare così $(\gamma,\lambda)^*$ che ci permette di minimizzare l'errore, e rimuovere due dei tre iperparametri; tuttavia ripetendo questo metodo di minimizzazione sulla regressione di un seno i cui campioni sono soggetti ad errore gaussiano, notiamo un comportamento simile al sovradattamento dei dati per il quale il regressore tende a frammentarsi notevolmente per seguire i campioni.
+
+In questo caso, però, l'errore è di sovravalidazione, infatti noi abbiamo ottimizzato la coppia $(\gamma,\lambda)$ sugli stessi dati con cui abbiamo costruito il modello del nostro regressore o del nostro classificatore e, provando a trovare per forza bruta il nostro minimo, quindi utilizzando molte prove (900 nel nostro caso), aumentiamo significativamente la probabilità di trovare una coppia che, assieme al modello già trovato sugli stessi dati, minimizzi l'errore sul nostro insieme per caso fortuito.
+
+È quindi d'uopo dividere l'insieme di dati in due sottoinsiemi: uno per trovare il regressore o classificatore ed uno per trovare la coppia di parametri migliore, dividendo così in due processi distinti l'apprendimento e la validazione.
+
+
+
+
 
