@@ -46,7 +46,9 @@ Chiamiamo $\Phi$ il vettore delle $\phi(x_i)$ e $Q(i,j) = \Phi^T(x_i)\Phi(x_j)$
 Utilizzando il kernel gaussiano $K(x,y) = e^{-\gamma||x - y||^2}$
 Apportando tale modifica sostituiamo $X^TX$ con $Q$.
 Quindi all'iperparametro di regolarizzazione $\lambda$ si uniscono $K(x,y)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
+
 Ponendo di utilizzare sempre il kernel gaussiano possiamo modificare $\lambda$, per il bilanciamento tra fiducia nei dati e semplicità del modello, e $\gamma$, che agisce sulla nonlinearità del modello.
+
 $\lambda$ alto tende a rendere il modello più piatto e, ponendolo a valori molto grandi, lo porta a costante; con valore basso il modello tende ad adattarsi di più ai dati, e con valori molto piccoli segue tutti i punti arrivando al sovradattamento.
 Invece, $\gamma$ alto rende il modello più nonlineare.
 
@@ -54,4 +56,7 @@ Invece, $\gamma$ alto rende il modello più nonlineare.
 
 Utilizzando il kernel gaussiano, visto nel caso sinusoidale, è possibile implementare un classificatore binario come quello nel paragrafo precedente.
 
-Formato il nostro dataset, formato da 2 spirali sfasate, una avente punti con etichetta positiva, l'altra con etichetta negativa
+Formato il nostro dataset, formato da 2 spirali sfasate, una avente punti con etichetta positiva, l'altra con etichetta negativa utilizziamo il kernel gaussiano per classificare i punti del dataset.
+
+Possiamo evidenziare che, per $\lambda$ decrescente in ```logspace(3,-4,30)``` (con $\gamma$ fisso a $.0001$), e $\gamma$ crescente in ```logspace(-4,3,30)``` (con $\lambda$ fisso a $1$), l'iperpiano ha comportamenti simili, cioè, aumenta la sua nonlinearità adattandosi sempre più ai dati a disposizione.
+
