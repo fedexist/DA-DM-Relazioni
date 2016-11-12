@@ -1,33 +1,57 @@
-% Esercitazione 2
+﻿% Esercitazione 2
 % Edoardo Ferrante; Federico D'Ambrosio
 
-# Regressione tramite i moltiplicatori di Lagrange e il Kernel Lagrangiano
+# Regressione e Classificazione binaria con Kernel Lineare
 
-## Retta
-Si � cominciata l'esercitazione calcolando il piano, che nel caso bidimensionale � denotato da una retta, che fittasse meglio un dataset formato da $n$ punti distribuiti casualmente tra $-1$ e $1$ tramite il calcolo di $\underline{w}$, la normale di tale piano.
+## Regressione: Retta
+Si è cominciata l'esercitazione calcolando l'iperpiano, che nel caso bidimensionale è denotato da una retta, che si adatti al meglio ad un insieme di dati formato da $n$ punti distribuiti casualmente tra $-1$ e $1$ tramite il calcolo di $\underline{w}$, la normale di tale piano.
 
 $\min_{w} ||X \underline{w} - \underline{y}||^2 + \lambda || \underline{w} ||^2 \implies \underline{w}^* = ( X^T X + \lambda I )^+ X^T \underline{y}$
 
-Tale formulazione, considerando $\underline{w} = X^T \underline{\alpha} \iff \underline{w} \in \mathbb{R}^d$, con 
+Tale formulazione, che porta alla risoluzione di un problema di complessità quadratica rispetto al numero delle features, può essere trasformata in un problema, equivalente, con la complessità dipendente dal numero di campioni a disposizione.
+Infatti, considerando $\underline{w} = X^T \underline{\alpha} \iff \underline{w} \in \mathbb{R}^d$, con 
 
  - $\underline{\alpha}$, un vettore di pesi;
  - le componenenti $\underline{x}_i$ della matrice $X$, formanti una base dello spazio $\mathbb{R}^d$ nel caso in esame $d=1$). 
  
-pu� essere sostituita dalla seguente:
+può essere sostituita dalla seguente:
 
 
 $\min_{\underline{\alpha}} ||X X^T \underline{\alpha} - \underline{y}||^2 + \lambda \underline{\alpha}^T X X^T \underline{\alpha}$
 $\underline{\alpha} = ( X X^T + \lambda I )^+ \underline{y}$
 
-Come ci si aspetta, le 2 formulazioni sono equivalenti e danno lo stesso risultato, con le stesse propriet�, al variare del parametro $\lambda$ e del rumore $\sigma$, rispetto alla precedente esercitazione: con $\lambda$ molto grande la regressione migliore � una retta costante con ordinata $0$
+La differenza di complessità è evidente nel fatto che l'inversione matriciale è effettuata, nel primo caso, su una matrice $d\,\text{x}\, d$, mentre nel secondo caso su una matrice $n\, \text{x}\, n$
 
-## Sinusoide
+Come ci si aspetta, le 2 formulazioni sono equivalenti e danno lo stesso risultato, con le stesse proprietà, al variare del parametro $\lambda$ e del rumore $\sigma$, rispetto alla precedente esercitazione: con $\lambda$ molto grande la regressione migliore è una retta costante con ordinata $0$, mentre con $\lambda$ piccolo il modello cerca di adattarsi maggiormente ai dati.
 
+## Classificazione: Punti su un piano
 
+Per cominciare, dobbiamo avere dei dati da classificare e, per questo, creiamo una distribuzione bidimensionale ($d=2$ in questo caso) casuale di punti, metà dei quali con etichetta positiva, metà con etichetta negativa.
 
-### Conclusioni
+In questo caso, come nel caso iniziale della retta, sfruttiamo un piano con normale $\underline{w}$, utilizzandolo, però, per permetterci di distinguere tra i punti "positivi" e quelli "negativi".
 
-## Caso 3: Spirale Archimedea
+Anche qui possiamo vedere che è possibile cambiare la complessità del problema, facendola dipendere sia dalla dimensionalità, sia dal numero di dati, senza che cambi il risultato.
 
+Per quanto riguarda i risultati, possiamo vedere nei grafici sottostanti che, in maniera analoga al caso $d=1$, con $\lambda$ molto grande si ha l'abbattimento della pendenza dell'iperpiano, quasi piatta, mentre con $\lambda$ più piccolo la pendenza aumenta e fa in modo che il piano si adatti sempre più ai dati.
 
-### Conclusioni
+# Regressione e Classificazione binaria con Kernel Gaussiano
+
+## Regressione: Sinusoide
+
+Visto che il metodo funziona con ciò che abbiamo visto, vogliamo provarlo come regressore di una funzione non lineare e testare le potenzialità del $\text{KRLS}$.
+Formiamo l'ormai familiare vettore $X$ di tutti i dati, di cardinalità $n$, distribuiti linearmente tra $-1,1$ e costruiamo $Y = sin(5X)$ soggetta ad un rumore gaussiano pesato con una data $\sigma$.
+
+Nel problema di minimizzazione introduciamo le $\phi(x_i)$, ovvero funzioni mappanti che proiettano lo spazio del dominio delle $x_i$ in un altro di dimensione maggiore.
+Chiamiamo $\Phi$ il vettore delle $\phi(x_i)$ e $Q(i,j) = \Phi^T(x_i)\Phi(x_j)$
+Utilizzando il kernel gaussiano $K(x,y) = e^{-\gamma||x - y||^2}$
+Apportando tale modifica sostituiamo $X^TX$ con $Q$.
+Quindi all'iperparametro di regolarizzazione $\lambda$ si uniscono $K(x,y)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
+Ponendo di utilizzare sempre il kernel gaussiano possiamo modificare $\lambda$, per il bilanciamento tra fiducia nei dati e semplicità del modello, e $\gamma$, che agisce sulla nonlinearità del modello.
+$\lambda$ alto tende a rendere il modello più piatto e, ponendolo a valori molto grandi, lo porta a costante; con valore basso il modello tende ad adattarsi di più ai dati, e con valori molto piccoli segue tutti i punti arrivando al sovradattamento.
+Invece, $\gamma$ alto rende il modello più nonlineare.
+
+## Classificazione: Spirale Archimedea
+
+Utilizzando il kernel gaussiano, visto nel caso sinusoidale, è possibile implementare un classificatore binario come quello nel paragrafo precedente.
+
+Formato il nostro dataset, formato da 2 spirali sfasate, una avente punti con etichetta positiva, l'altra con etichetta negativa
