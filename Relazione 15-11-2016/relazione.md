@@ -42,10 +42,12 @@ Visto che il metodo funziona con ciò che abbiamo visto, vogliamo provarlo come 
 Formiamo l'ormai familiare vettore $X$ di tutti i dati, di cardinalità $n$, distribuiti linearmente tra $-1,1$ e costruiamo $Y = sin(5X)$ soggetta ad un rumore gaussiano pesato con una data $\sigma$.
 
 Nel problema di minimizzazione introduciamo le $\phi(x_i)$, ovvero funzioni mappanti che proiettano lo spazio del dominio delle $x_i$ in un altro di dimensione maggiore.
-Chiamiamo $\Phi$ il vettore delle $\phi(x_i)$ e $Q(i,j) = \Phi^T(x_i)\Phi(x_j)$
-Utilizzando il kernel gaussiano $K(x,y) = e^{-\gamma||x - y||^2}$
-Apportando tale modifica sostituiamo $X^TX$ con $Q$.
-Quindi all'iperparametro di regolarizzazione $\lambda$ si uniscono $K(x,y)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
+
+Chiamiamo $\Phi$ il vettore delle $\phi(x_i)$ e $Q(i,j) = \Phi^T(x_i)\Phi(x_j)$.
+
+Utilizzando il kernel gaussiano $K(\underline{x}_i,\underline{x}_j)= e^{-\gamma||\underline{x}_i - \underline{x}_j||^2}$. Quindi, sostituiamo $X^TX$ con $Q$.
+
+Di conseguenza, all'iperparametro di regolarizzazione $\lambda$ si uniscono $K(\underline{x}_i,\underline{x}_j)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
 
 Ponendo di utilizzare sempre il kernel gaussiano possiamo modificare $\lambda$, per il bilanciamento tra fiducia nei dati e semplicità del modello, e $\gamma$, che agisce sulla nonlinearità del modello.
 
