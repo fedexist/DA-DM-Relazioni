@@ -9,7 +9,8 @@ Si è cominciata l'esercitazione calcolando l'iperpiano, che nel caso bidimensio
 $\min_{w} ||X \underline{w} - \underline{y}||^2 + \lambda || \underline{w} ||^2 \implies \underline{w}^* = ( X^T X + \lambda I )^+ X^T \underline{y}$
 
 Tale formulazione, che porta alla risoluzione di un problema di complessità quadratica rispetto alla dimensionalità, può essere trasformata in un problema, equivalente, con la complessità dipendente dal numero di campioni a disposizione.
-Infatti, considerando $\underline{w} = X^T \underline{\alpha} \iff \underline{w} \in \mathbb{R}^d$, con 
+
+Infatti, tramite il Representer Theorem, considerando $\underline{w} = X^T \underline{\alpha} \iff \underline{w} \in \mathbb{R}^d$, con 
 
  - $\underline{\alpha}$, un vettore di pesi;
  - le componenenti $\underline{x}_i$ della matrice $X$, formanti una base dello spazio $\mathbb{R}^d$ nel caso in esame $d=1$). 
@@ -30,9 +31,11 @@ Per cominciare, dobbiamo avere dei dati da classificare e, per questo, creiamo u
 
 In questo caso, come nel caso iniziale della retta, sfruttiamo un piano con normale $\underline{w}$, utilizzandolo, però, per permetterci di distinguere tra i punti "positivi" e quelli "negativi".
 
-Anche qui possiamo vedere che è possibile cambiare la complessità del problema, facendola dipendere sia dalla dimensionalità, sia dal numero di dati, senza che cambi il risultato.
+Anche qui possiamo vedere che, sfruttando l'uguaglianza $\underline{w} = X^T \underline{\alpha}$, è possibile cambiare la complessità del problema, facendola dipendere sia dalla dimensionalità, sia dal numero di dati, senza che cambi il risultato.
 
-Per quanto riguarda i risultati, in maniera analoga al caso $d=1$, con $\lambda$ molto grande si ha l'abbattimento della pendenza dell'iperpiano, quasi piatta, mentre con $\lambda$ più piccolo la pendenza aumenta e fa in modo che il piano si adatti sempre più ai dati.
+Per quanto riguarda i risultati, in maniera analoga al caso $d=1$, con $\lambda$ molto grande si ha l'abbattimento della pendenza dell'iperpiano, quasi piatta, che non ci permette di classificare con probabilità significativa i campioni, mentre con $\lambda$ più piccolo la pendenza aumenta e ci permette di classificare meglio i campioni: i campioni nella zona rossa (YF<-1) e nella zona blu (YF>1) sono quelli che, con maggiore probabilità, possiamo classificare rispettivamente con etichetta negativa ed etichetta positiva.
+
+![$\lambda = 0.1$ - Zona rossa: YF <-1, Zona blu: YF > 1. I campioni in tali zone sono classificati con maggiore probabilità](graph1.png)
 
 \pagebreak
 
@@ -47,11 +50,16 @@ Nel problema di minimizzazione introduciamo le $\phi(x_i)$, ovvero funzioni mapp
 
 Chiamiamo $\Phi$ il vettore delle $\phi(x_i)$ e $Q(i,j) = \Phi^T(x_i)\Phi(x_j)$.
 
-Utilizzando il kernel gaussiano $K(\underline{x}_i,\underline{x}_j)= e^{-\gamma||\underline{x}_i - \underline{x}_j||^2}$. Quindi, sostituiamo $X^TX$ con $Q$.
+Utilizzando il kernel gaussiano $K(\underline{x}_i,\underline{x}_j)= e^{-\gamma||\underline{x}_i - \underline{x}_j||^2}$. Quindi, sostituiamo $X^TX$ con $Q$ e otteniamo:
 
-Di conseguenza, all'iperparametro di regolarizzazione $\lambda$ si uniscono $K(\underline{x}_i,\underline{x}_j)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
+$y_f = \sum_{i} \alpha_i\, K(\underline{x}_i, \underline{x}) = \sum_{i} \alpha_i\, e^{-\gamma||\underline{x}_i - \underline{x}||^2}$
+con $\underline{\alpha} = ( Q + \lambda I)^+ \underline{y}$
 
-Ponendo di utilizzare sempre il kernel gaussiano possiamo modificare $\lambda$, per il bilanciamento tra fiducia nei dati e semplicità del modello, e $\gamma$, che agisce sulla nonlinearità del modello.
+come funzione del regressore.
+
+Ne consegue che, all'iperparametro di regolarizzazione $\lambda$, si uniscono $K(\underline{x}_i,\underline{x}_j)$, la tipologia di kernel, e $\gamma$ parametro dello stesso.
+
+Ponendo di utilizzare sempre il kernel gaussiano possiamo modificare $\lambda$, per bilanciare tra fiducia nei dati e semplicità del modello, e $\gamma$, che agisce sulla nonlinearità del modello.
 
 $\lambda$ alto tende a rendere il modello più piatto e, ponendolo a valori molto grandi, lo porta a costante; con valore basso il modello tende ad adattarsi di più ai dati, e con valori molto piccoli segue tutti i punti arrivando al sovradattamento.
 Invece, $\gamma$ alto rende il modello più nonlineare.
@@ -64,9 +72,9 @@ Formato il nostro insieme dei dati, formato da 2 spirali sfasate, una avente pun
 
 Possiamo evidenziare che, per $\lambda$ decrescente in ```logspace(3,-4,30)``` (con $\gamma$ fisso a $.0001$), e $\gamma$ crescente in ```logspace(-4,3,30)``` (con $\lambda$ fisso a $1$), l'iperpiano ha comportamenti simili, cioè, aumenta la sua nonlinearità adattandosi sempre più ai dati a disposizione.
 
-Utilizzando un doppio ciclo possiamo provare tutti i valori per la coppia $(\gamma,\lambda)$, e trovare così $(\gamma,\lambda)^*$ che ci permette di minimizzare l'errore su un sottoinsieme dell'insieme dei dati diverso da quello di addestramento chiamato insieme di training, e rimuovere due dei tre iperparametri; tuttavia ripetendo questo metodo di minimizzazione sulla regressione di un seno i cui campioni sono soggetti ad errore gaussiano, notiamo un comportamento simile al sovradattamento dei dati per il quale il regressore tende a frammentarsi notevolmente per seguire i campioni.
+Utilizzando un doppio ciclo possiamo provare tutti i valori per la coppia $(\gamma,\lambda)$, e trovare così $(\gamma,\lambda)^*$ che ci permette di minimizzare l'errore su un sottoinsieme dell'insieme dei dati diverso da quello di addestramento chiamato insieme di training, e rimuovere due dei tre iperparametri; tuttavia, ripetendo questo metodo di minimizzazione sulla regressione del seno visto in precedenza, i cui campioni sono soggetti ad errore gaussiano, notiamo un comportamento simile al sovradattamento dei dati, per il quale il regressore tende a frammentarsi notevolmente per seguire i campioni.
 
-In questo caso, però, l'errore è di sovravalidazione, infatti noi abbiamo ottimizzato la coppia $(\gamma,\lambda)$ tramite forza bruta provando una grande combinazione di valori, 900 nel nostro caso, e questa ingradisce fortemente la probabilità di trovare un modello sbagliato che tramite una opportuna coppia $(\gamma,\lambda)$ minimizzi l'errore per puro caso.
+In questo caso, però, l'errore è di sovravalidazione, infatti noi abbiamo ottimizzato la coppia $(\gamma,\lambda)$ tramite forza bruta provando una grande combinazione di valori, 900 nel nostro caso, che ingrandisce fortemente la probabilità di trovare un modello sbagliato che tramite una opportuna coppia $(\gamma,\lambda)$ minimizzi l'errore per puro caso fortuito.
 
 È quindi d'uopo aggiungere un terzo insieme di test tramite il quale possiamo stimare l'accuratezza del nostro modello.
 
