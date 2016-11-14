@@ -32,7 +32,9 @@ In questo caso, come nel caso iniziale della retta, sfruttiamo un piano con norm
 
 Anche qui possiamo vedere che è possibile cambiare la complessità del problema, facendola dipendere sia dalla dimensionalità, sia dal numero di dati, senza che cambi il risultato.
 
-Per quanto riguarda i risultati, possiamo vedere nei grafici sottostanti che, in maniera analoga al caso $d=1$, con $\lambda$ molto grande si ha l'abbattimento della pendenza dell'iperpiano, quasi piatta, mentre con $\lambda$ più piccolo la pendenza aumenta e fa in modo che il piano si adatti sempre più ai dati.
+Per quanto riguarda i risultati, in maniera analoga al caso $d=1$, con $\lambda$ molto grande si ha l'abbattimento della pendenza dell'iperpiano, quasi piatta, mentre con $\lambda$ più piccolo la pendenza aumenta e fa in modo che il piano si adatti sempre più ai dati.
+
+\pagebreak
 
 # Regressione e Classificazione binaria con Kernel Gaussiano
 
