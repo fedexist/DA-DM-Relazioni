@@ -72,11 +72,11 @@ Formato il nostro insieme dei dati, formato da 2 spirali sfasate, una avente pun
 
 Possiamo evidenziare che, per $\lambda$ decrescente in ```logspace(3,-4,30)``` (con $\gamma$ fisso a $.0001$), e $\gamma$ crescente in ```logspace(-4,3,30)``` (con $\lambda$ fisso a $1$), l'iperpiano ha comportamenti simili, cioè, aumenta la sua nonlinearità adattandosi sempre più ai dati a disposizione.
 
-Utilizzando un doppio ciclo possiamo provare tutti i valori per la coppia $(\gamma,\lambda)$, e trovare così $(\gamma,\lambda)^*$ che ci permette di minimizzare l'errore su un sottoinsieme dell'insieme dei dati diverso da quello di addestramento chiamato insieme di training, e rimuovere due dei tre iperparametri; tuttavia, ripetendo questo metodo di minimizzazione sulla regressione del seno visto in precedenza, i cui campioni sono soggetti ad errore gaussiano, notiamo un comportamento simile al sovradattamento dei dati, per il quale il regressore tende a frammentarsi notevolmente per seguire i campioni.
+Utilizzando un doppio ciclo possiamo provare tutti i valori per la coppia $(\gamma,\lambda)$, e trovare così $(\gamma,\lambda)^*$ che ci permette di minimizzare l'errore su un sottoinsieme dell'insieme dei dati diverso da quello di addestramento chiamato insieme di validazione, e rimuovere due dei tre iperparametri; tuttavia, ripetendo questo metodo di minimizzazione sulla regressione del seno visto in precedenza, i cui campioni sono soggetti ad errore gaussiano, notiamo un comportamento simile al sovradattamento dei dati, per il quale il regressore tende a frammentarsi notevolmente per seguire i campioni.
 
 In questo caso, però, l'errore è di sovravalidazione, infatti noi abbiamo ottimizzato la coppia $(\gamma,\lambda)$ tramite forza bruta provando una grande combinazione di valori, 900 nel nostro caso, che ingrandisce fortemente la probabilità di trovare un modello sbagliato che tramite una opportuna coppia $(\gamma,\lambda)$ minimizzi l'errore per puro caso fortuito.
 
-È quindi d'uopo aggiungere un terzo insieme di test tramite il quale possiamo stimare l'accuratezza del nostro modello.
+È quindi d'uopo aggiungere un terzo insieme di test tramite il quale possiamo stimare l'accuratezza del nostro modello in seguito alle ottimizzazioni compiute sugli insiemi di addestramento e di validazione.
 
 
 
