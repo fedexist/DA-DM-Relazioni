@@ -3,7 +3,7 @@
 
 # Regressione, Classificazione binaria e multiclasse con Support Vector Machine
 In questa esercitazione si è utilizzato l'algoritmo di Sequential Minimal Optimization per la fase di training delle Support Vector Machine utilizzate. In particolare, viene usato per la risoluzione di problemi quadratici, cioè problemi del tipo:
-$min_{\underline{5}} \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}^T\underline{x}$, soggetto a vincoli:
+$min_{\underline{x}} \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}^T\underline{x}$, soggetto a vincoli:
 $LB \leq \underline{x} \leq UB$
 $\underline{a}^T \underline{x} = \underline{b}$.
 
