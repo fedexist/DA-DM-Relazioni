@@ -7,6 +7,11 @@ $min_{\underline{x}} \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}
 $LB \leq \underline{x} \leq UB$
 $\underline{a}^T \underline{x} = \underline{b}$.
 
+Dall'applicazione di questo algoritmo troviamo 2 valori particolari:
+
+  - $\alpha$, soluzione ottima del problema quadratico risolto;
+  - $bias$, valore di bias ottenuto.  
+
 ## Regressione di Sinusoide con intervallo di insensitività
 
 Per trovare il regressore di una sinusoide soggetta a rumore gaussiano, $Y = \sin(10X) + \sigma \; randn(n,1)$ , occorre fissare, per cominciare, i 3 iperparametri della SVM:
@@ -47,16 +52,38 @@ Al variare degli iperparametri, lasciando gli altri a valori ragionevoli, possia
     - con $\gamma$ molto grande, il regressore è altamente non lineare e cerca di adattarsi ai punti al di fuori dell'intervallo di insensitività;
     - con $\gamma$ molto piccolo, il regressore è praticamente una retta costante in 0 ed è quindi estremamente lineare.
   Questi risultati confermano quanto già osservato nella precedente esercitazione.
+  
  - al variare di $\epsilon$:
+ 
     - con $\epsilon$ troppo grande, il regressore non impara mai, visto che i punti all'esterno dell'intervallo di insensitività sono molto pochi;
     - con $\epsilon$ troppo piccolo, il tubo di insensitività è praticamente nullo e il regressore considera errori da cui imparare tutti i punti
  - al variare di $C$:
+ 
     - con $C$ molto grande, il regressore è molto spezzettato in quanto cerca di adattarsi al maggior numero possibile di dati (analogamente al $\lambda$ molto piccolo delle precedenti esercitazioni) che non si trovano nell'intervallo di insensitività;
     - con $C$ molto piccolo, il regressore è una costante in 0, a riprova del fatto che vengono ignorati i dati (analogamente al $\lambda$ molto grande delle precedenti esercitazioni).
 	
 ## Classificazione binaria 
 ### Classificatore a sfera su iperspazio
-	main1
+Per effettuare la classificazione di $n=100$ punti appartenenti a una sfera, dopo aver generato il dataset, come nel caso precedente, utilizziamo l'algoritmo di Sequential Minimal Optimization, questa volta usando come parametri:
+
+ - $H = 2 X X^T$;
+ - $f = - \frac{1}{2} diag(H)$;
+ - $a = \begin{bmatrix}
+		\mathbb{I} \\
+		\end{bmatrix}$;
+ - $LB = \underline{0}$;
+ - $UB = \infty$.
+
+Grazie alla soluzione ottima di SMO $\alpha$ possiamo calcolarci il centro della sfera a cui appartengono i punti e troviamo il raggio di tale sfera, equivalente alla distanza del punto appartenente al dataset più lontano dal centro:
+
+	a = X' * alpha;
+	R = max(pdist2(X,a'));
+
+Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere che tutti i punti del dataset sono, correttamente, all'interno della sfera, ad eccezione di 3 punti (che possono diventare 2 in alcune esecuzioni) che si trovano
+alla frontiera della sfera.
+Analizzando la soluzione, $\alpha$, possiamo vedere che tutti i punti, eccetto quelli sulla frontiera, hanno la corrispettiva componente di $\alpha$ nulla, mentre la somma delle componenti diverse da 0 è uguale a $1$.
+Questo risultato conferma, rispetto a quanto visto a lezione [da terminare] 
+
 	main2
 ### Conferma risultati precedenti
 	main3
