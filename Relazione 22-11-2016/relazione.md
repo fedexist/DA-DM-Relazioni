@@ -103,7 +103,27 @@ $\frac{\partial L_p}{\partial \underline{a}} = 0 \implies \underline{a} = \sum_{
 $\frac{\partial L_p}{\partial R^2} = 0 \implies \sum_{i} \alpha_i = 1$, condizione che il vettore di moltiplicatori $\underline{\alpha}$ deve rispettare.
 
 ### Conferma risultati precedenti
-	main3
-	main4
+Per ricollegarci a quanto precedentemente visto per il kernel lineare, abbiamo proceduto alla classificazione di punti generati tramite una spirale archimedea e quella di punti su un piano.
+Abbiamo riscontrato gli stessi risultati trovati precedentemente e, nel caso del piano abbiamo inoltre potuto vedere il significato geometrico dei moltiplicatori $\alpha$
+![Punti verdi sulla frontiera, punti neri dalla parte sbagliata](graph3.png "test")
+Segnando infatti in verde i punti con $0 < \alpha < c$ e in nero quelli con $\alpha = c$ notiamo che i primi sono quelli ai limiti della banda di divisione e i secondi sono quelli dalla parte errata del piano.
+Ovvero i punti da cui impara il nostro classificatore, graficamente sono quelli sbagliati o quelli al limite.
+
 ## Classificazione multiclasse
-	main6
+Come ultimo esercizio relativo alla SVM abbiamo voluto provare un classificatore multiclasse.
+Abbiamo costruito un insieme di addestramo di $n=30$ punti per ciascuna delle $c = 6$ classi, suddivisi sui $c$ settori del piano d'appartenenza (a ciascun settore una classe), con posizione perturbata da un rumore gaussiano.
+
+Generiamo altresì $nf = 10000$ punti casuali con distribuzione normale con posizioni nella zona del piano dei nostri punti di addestramento da poter etichettare col classificatore.
+
+Per classificare i punti, utilizziamo l'algoritmo $\mathbf{All}$ $\mathbf{Vs}$ $\mathbf{All}$, ovvero, per ogni coppia di classi costruiamo un classificatore binario come visto in precedenza e per ogni punto immagazziniamo la risposta del siffatto classificatore in un vettore.
+
+Avremo quindi una matrice $nf \times$${c} \choose 2$ dentro la quale per un dato punto $i$ avremo ${c} \choose 2$ etichette ricevute dai rispettivi classificatori binari, facendo quindi la moda su questi, e così facendo una votazione, decideremo globalmente a quale classe appartiene quel punto.
+
+![Il piano suddiviso nelle 6 classi con i punti di addestramento in grosso](graph4.png "test")
+
+Nel nostro esperimento costruiamo quindi $6 \choose 2$$= 15$ classificatori binari che che decidono a quale delle due classi appartengono i $10000$ punti e quindi votano per decidere a quale delle 6 classe veramente appartenga.
+
+
+
+
+
