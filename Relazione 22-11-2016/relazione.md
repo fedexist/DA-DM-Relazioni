@@ -2,15 +2,15 @@
 % Edoardo Ferrante; Federico D'Ambrosio
 
 # Regressione, Classificazione binaria e multiclasse con Support Vector Machine
-In questa esercitazione si è utilizzato l'algoritmo di Sequential Minimal Optimization per la fase di training delle Support Vector Machine utilizzate. In particolare, viene usato per la risoluzione di problemi quadratici, cioè problemi del tipo:
+In questa esercitazione si è utilizzato l'algoritmo di Sequential Minimal Optimization per la fase di addestramento delle Support Vector Machine utilizzate. In particolare, viene usato per la risoluzione di problemi quadratici, cioè problemi del tipo:
 $min_{\underline{x}} \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}^T\underline{x}$, soggetto a vincoli:
 $LB \leq \underline{x} \leq UB$
 $\underline{a}^T \underline{x} = \underline{b}$.
 
 Dall'applicazione di questo algoritmo troviamo 2 valori particolari:
 
-  - $\alpha$, soluzione ottima del problema quadratico risolto;
-  - $bias$, valore di bias ottenuto.  
+  - $\alpha$, vettore di moltiplicatori di Lagrange, soluzione ottima del problema quadratico risolto;
+  - $b$, valore di bias ottenuto applicabile alla SVM nella fase di forward.  
 
 ## Regressione di Sinusoide con intervallo di insensitività
 
@@ -39,7 +39,7 @@ Fissati tali valori, facciamo risolvere all'algoritmo il nostro problema quadrat
  - $LB = \underline{0}$;
  - $UB = \underline{C}$.
 
-Come risultato dal SMO otteniamo $\underline{\alpha}$, soluzione ottima del problema, e $b$, il bias applicabile al regressore.
+Come risultato dal SMO otteniamo $\underline{\alpha}$, come già detto, soluzione ottima del problema, e $b$, il bias applicabile al regressore.
 Possiamo, quindi, calcolarci il regressore:
 
 	XF = linspace(-1,1,1000)';
@@ -61,6 +61,8 @@ Al variare degli iperparametri, lasciando gli altri a valori ragionevoli, possia
  
     - con $C$ molto grande, il regressore è molto spezzettato in quanto cerca di adattarsi al maggior numero possibile di dati (analogamente al $\lambda$ molto piccolo delle precedenti esercitazioni) che non si trovano nell'intervallo di insensitività;
     - con $C$ molto piccolo, il regressore è una costante in 0, a riprova del fatto che vengono ignorati i dati (analogamente al $\lambda$ molto grande delle precedenti esercitazioni).
+
+\pagebreak
 	
 ## Classificazione binaria 
 ### Classificatore a sfera su iperspazio
@@ -79,12 +81,27 @@ Grazie alla soluzione ottima di SMO $\alpha$ possiamo calcolarci il centro della
 	a = X' * alpha;
 	R = max(pdist2(X,a'));
 
-Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere che tutti i punti del dataset sono, correttamente, all'interno della sfera, ad eccezione di 3 punti (che possono diventare 2 in alcune esecuzioni) che si trovano
+Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere che tutti i punti del dataset sono all'interno della sfera, ad eccezione di 3 punti (che possono diventare 2 in alcune esecuzioni) che si trovano
 alla frontiera della sfera.
-Analizzando la soluzione, $\alpha$, possiamo vedere che tutti i punti, eccetto quelli sulla frontiera, hanno la corrispettiva componente di $\alpha$ nulla, mentre la somma delle componenti diverse da 0 è uguale a $1$.
-Questo risultato conferma, rispetto a quanto visto a lezione [da terminare] 
 
-	main2
+
+![In questo classificatore 2 punti sono sulla frontiera della sfera](graph1.png "test") \ ![In questo classificatore 3 punti sono sulla frontiera della sfera](graph2.png "test")
+
+Analizzando la soluzione, $\alpha$, possiamo vedere che tutti i punti, eccetto quelli sulla frontiera, hanno la corrispettiva componente di $\alpha$ nulla, mentre la somma delle componenti diverse da 0 è uguale a $1$.
+Questo risultato conferma quanto visto a lezione in merito alle condizioni KKT in questo problema specifico di classificazione binaria con una sfera.
+
+Infatti, dal Lagrangiano primale del problema originario di minimizzazione:
+
+$L_p(\underline{a}, R^2, \underline{\alpha}) = R^2 - \sum_{i} \alpha_i (R^2 - ||\underline{x}_i - \underline{a}||^2)$
+
+con $\alpha_i \geq 0$
+
+si ottengono le condizioni KKT:
+
+$\frac{\partial L_p}{\partial \underline{a}} = 0 \implies \underline{a} = \sum_{i} \alpha_i \underline{x}_i$, condizione che deve rispettare il centro della sfera;
+
+$\frac{\partial L_p}{\partial R^2} = 0 \implies \sum_{i} \alpha_i = 1$, condizione che il vettore di moltiplicatori $\underline{\alpha}$ deve rispettare.
+
 ### Conferma risultati precedenti
 	main3
 	main4
