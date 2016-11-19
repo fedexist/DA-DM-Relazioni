@@ -85,7 +85,9 @@ Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere 
 alla frontiera della sfera.
 
 
-![In questo classificatore 2 punti sono sulla frontiera della sfera](graph1.png "test") \ ![In questo classificatore 3 punti sono sulla frontiera della sfera](graph2.png "test")
+![In questo classificatore 2 punti sono sulla frontiera della sfera](graph1.png "test") 
+
+![In questo classificatore 3 punti sono sulla frontiera della sfera](graph2.png "test")
 
 Analizzando la soluzione, $\alpha$, possiamo vedere che tutti i punti, eccetto quelli sulla frontiera, hanno la corrispettiva componente di $\alpha$ nulla, mentre la somma delle componenti diverse da 0 è uguale a $1$.
 Questo risultato conferma quanto visto a lezione in merito alle condizioni KKT in questo problema specifico di classificazione binaria con una sfera.
@@ -102,12 +104,20 @@ $\frac{\partial L_p}{\partial \underline{a}} = 0 \implies \underline{a} = \sum_{
 
 $\frac{\partial L_p}{\partial R^2} = 0 \implies \sum_{i} \alpha_i = 1$, condizione che il vettore di moltiplicatori $\underline{\alpha}$ deve rispettare.
 
+\pagebreak
+
 ### Conferma risultati precedenti
 Per ricollegarci a quanto precedentemente visto per il kernel lineare, abbiamo proceduto alla classificazione di punti generati tramite una spirale archimedea e quella di punti su un piano.
 Abbiamo riscontrato gli stessi risultati trovati precedentemente e, nel caso del piano abbiamo inoltre potuto vedere il significato geometrico dei moltiplicatori $\alpha$
+
 ![Punti verdi sulla frontiera, punti neri dalla parte sbagliata](graph3.png "test")
+
 Segnando infatti in verde i punti con $0 < \alpha < c$ e in nero quelli con $\alpha = c$ notiamo che i primi sono quelli ai limiti della banda di divisione e i secondi sono quelli dalla parte errata del piano.
 Ovvero i punti da cui impara il nostro classificatore, graficamente sono quelli sbagliati o quelli al limite.
+
+Altro punto saliente rispetto a quanto già visto è che l'inclinazione del piano divisore viene trovata con i valori di $\alpha$, allo stesso modo con il bias trovato sempre con l'algoritmo SMO trasliamo il piano decidendone quindi la posizione.
+
+\pagebreak
 
 ## Classificazione multiclasse
 Come ultimo esercizio relativo alla SVM abbiamo voluto provare un classificatore multiclasse.
@@ -120,8 +130,7 @@ Per classificare i punti, utilizziamo l'algoritmo $\mathbf{All}$ $\mathbf{Vs}$ $
 Avremo quindi una matrice $nf \times$${c} \choose 2$ dentro la quale per un dato punto $i$ avremo ${c} \choose 2$ etichette ricevute dai rispettivi classificatori binari, facendo quindi la moda su questi, e così facendo una votazione, decideremo globalmente a quale classe appartiene quel punto.
 
 ![Il piano suddiviso nelle 6 classi con i punti di addestramento in grosso](graph4.png "test")
-
-Nel nostro esperimento costruiamo quindi $6 \choose 2$$= 15$ classificatori binari che che decidono a quale delle due classi appartengono i $10000$ punti e quindi votano per decidere a quale delle 6 classe veramente appartenga.
+Nel nostro esperimento costruiamo quindi $6 \choose 2$$= 15$ classificatori binari che decidono a quale delle due classi appartengono i $10000$ punti e quindi votano per decidere a quale delle 6 classe veramente appartenga.
 
 
 
