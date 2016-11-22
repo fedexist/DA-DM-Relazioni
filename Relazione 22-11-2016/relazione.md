@@ -3,8 +3,10 @@
 
 # Regressione, Classificazione binaria e multiclasse con Support Vector Machine
 In questa esercitazione si è utilizzato l'algoritmo di Sequential Minimal Optimization per la fase di addestramento delle Support Vector Machine utilizzate. In particolare, viene usato per la risoluzione di problemi quadratici, cioè problemi del tipo:
-$min_{\underline{x}} \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}^T\underline{x}$, soggetto a vincoli:
+$min_{\underline{x}} \, \frac{1}{2} \underline{x}^T H \underline{x} + \underline{f}^T\underline{x}$, soggetto a vincoli:
+
 $LB \leq \underline{x} \leq UB$
+
 $\underline{a}^T \underline{x} = \underline{b}$.
 
 Dall'applicazione di questo algoritmo troviamo 2 valori particolari:
@@ -81,7 +83,7 @@ Grazie alla soluzione ottima di SMO $\alpha$ possiamo calcolarci il centro della
 	a = X' * alpha;
 	R = max(pdist2(X,a'));
 
-Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere che tutti i punti del dataset sono all'interno della sfera, ad eccezione di 3 punti (che possono diventare 2 in alcune esecuzioni) che si trovano
+Disegnando su grafico la sfera di raggio $R$, appena calcolato, possiamo vedere che tutti i punti del dataset sono all'interno della sfera, ad eccezione di 3 punti (che possono essere 2, se allineati, in alcune esecuzioni) che si trovano
 alla frontiera della sfera.
 
 
@@ -110,9 +112,9 @@ $\frac{\partial L_p}{\partial R^2} = 0 \implies \sum_{i} \alpha_i = 1$, condizio
 Per ricollegarci a quanto precedentemente visto per il kernel lineare, abbiamo proceduto alla classificazione di punti generati tramite una spirale archimedea e quella di punti su un piano.
 Abbiamo riscontrato gli stessi risultati trovati precedentemente e, nel caso del piano abbiamo inoltre potuto vedere il significato geometrico dei moltiplicatori $\alpha$
 
-![Punti verdi sulla frontiera, punti neri dalla parte sbagliata](graph3.png "test")
+![Punti verdi sulla frontiera, i punti neri sono classficati in maniera scorretta](graph3.png "test")
 
-Segnando infatti in verde i punti con $0 < \alpha < c$ e in nero quelli con $\alpha = c$ notiamo che i primi sono quelli ai limiti della banda di divisione e i secondi sono quelli dalla parte errata del piano.
+Segnando infatti in verde i punti con $0 \le \alpha \le c$ e in nero quelli con $\alpha = c$ notiamo che i primi sono quelli ai limiti della banda di divisione e i secondi sono quelli dalla parte errata del piano.
 Ovvero i punti da cui impara il nostro classificatore, graficamente sono quelli sbagliati o quelli al limite.
 
 Altro punto saliente rispetto a quanto già visto è che l'inclinazione del piano divisore viene trovata con i valori di $\alpha$, allo stesso modo con il bias trovato sempre con l'algoritmo SMO trasliamo il piano decidendone quindi la posizione.
