@@ -71,7 +71,7 @@ Inoltre a differenza degli alberi visti singolarmente non metteremo un'altezza m
 
 Addestrati tutti gli alberi, la fase avanti della foresta è semplicemente data dalla fase avanti su ciascun albero e dal voto (tramite moda) sui risultati di questi.
 
-Non avendo limiti sull'altezza l'algoritmo di random forest è apparentemente senza iperparametri, tuttavia ve ne sono 5 celati nell'implementazione:
+Non avendo limiti sull'altezza, l'algoritmo di random forest è apparentemente senza iperparametri, tuttavia ve ne sono 5 celati nell'implementazione:
 
 1. Ad ogni albero vengono passati un numero n di campioni, questo n è deciso a priori.
   2. Ogni albero utilizza $\sqrt{d}$ dimensioni per fare il taglio, un'altra scelta arbitraria.
@@ -79,12 +79,12 @@ Non avendo limiti sull'altezza l'algoritmo di random forest è apparentemente se
   4. Il numero di alberi utilizzati.
   5. Il peso dato ad ogni albero, che noi abbiamo stabilito a 1.
 
-
-Dal grafico possiamo vedere che la divisione dei campioni in classi è meno squadrata rispetto a quella vista dai singoli alberi specialmente nella parte centrale dove la la classificazione è più difficile e quindi il voto la rende più frammentata.
-
-
+![Dal grafico possiamo vedere che la divisione dei campioni in classi è meno squadrata rispetto a quella vista dai singoli alberi specialmente nella parte centrale dove la la classificazione è più difficile e quindi il voto la rende più frammentata.
+](graph4.png)
 
 
+
+\pagebreak
 
 
 
@@ -102,5 +102,5 @@ Quindi su ciascuna iterazione calcoliamo l'accuratezza quindi ne facciamo la med
 
 Facendo partire l'algoritmo troviamo un'accuratezza del $93\%$, che ci fa pensare di aver trovato un ottimo modello, tuttavia ci ricordiamo che l'accuratezza da sola è poco utile e quindi calcoliamo anche la varianza mettendo un intervallo di confidenza di $2\sigma$ e troviamo così una varianza del $27\%$ e quindi vediamo che in realtà il modello non è molto buono, e necessitiamo di più dati.
 
-Infine possiamo calcolare la matrice di confusione per vedere non solo quanto abbiamo sbagliato a classificare ma quali classi abbiamo confuso di più. Per esempio possiamo notare che campioni di classe $3$ poche volte li abbiamo classificati come di classe $1$.
-
+Infine possiamo calcolare la matrice di confusione per vedere, non solo quanto abbiamo sbagliato a classificare, ma anche quali classi abbiamo confuso di più. Per esempio, possiamo notare che campioni di classe $3$ pochissime volte sono stati classificati come appartententi classe $1$.
+E, vista la nostra interpretazione delle classi, questo è positivo, perché significa che, anche se sbagliamo, raramente confondiamo vini eccelsi con vini scadenti, ma le uniche incertezze che abbiamo sono sul passaggio fra classe intermedia e classi estreme.
