@@ -1,7 +1,7 @@
 ﻿% Esercitazione 5
 % Edoardo Ferrante; Federico D'Ambrosio
 
-# Analisi dei gruppi
+# Clustering
 
 L'obiettivo della quinta esercitazione era di analizzare gli algoritmi di clustering e provarne l'accuratezza in relazione agli iperparametri.
 
